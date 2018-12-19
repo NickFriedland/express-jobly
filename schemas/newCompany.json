@@ -4,7 +4,7 @@
   "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
-  "required": ["handle", "name"],
+  "required": ["handle", "name", "num_employees"],
   "properties": {
     "handle": {
       "$id": "#/properties/handle",
@@ -27,7 +27,8 @@
       "type": "integer",
       "title": "The Num_employees Schema",
       "default": 0,
-      "examples": [1]
+      "examples": [1],
+      "minimum": 0.0
     },
     "description": {
       "$id": "#/properties/description",

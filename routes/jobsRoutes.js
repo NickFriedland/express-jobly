@@ -2,6 +2,8 @@ const express = require('express');
 const jobsRoutes = express();
 const Job = require('../models/Job');
 const router = new express.Router();
+const { validate } = require('jsonschema');
+const jobSchema = require('../schemas/newJob.json');
 
 // POST /jobs
 

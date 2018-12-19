@@ -1,0 +1,85 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": ["users"],
+  "properties": {
+    "users": {
+      "$id": "#/properties/users",
+      "type": "object",
+      "title": "The Users Schema",
+      "required": [
+        "username",
+        "password",
+        "first_name",
+        "last_name",
+        "email",
+        "photo_url",
+        "is_admin"
+      ],
+      "properties": {
+        "username": {
+          "$id": "#/properties/users/properties/username",
+          "type": "string",
+          "title": "The Username Schema",
+          "default": "",
+          "examples": ["username"],
+          "pattern": "^(.*)$"
+        },
+        "password": {
+          "$id": "#/properties/users/properties/password",
+          "type": "string",
+          "title": "The Password Schema",
+          "default": "",
+          "examples": ["secret"],
+          "pattern": "^(.*)$"
+        },
+        "first_name": {
+          "$id": "#/properties/users/properties/first_name",
+          "type": "string",
+          "title": "The First_name Schema",
+          "default": "",
+          "examples": ["John"],
+          "pattern": "^(.*)$"
+        },
+        "last_name": {
+          "$id": "#/properties/users/properties/last_name",
+          "type": "string",
+          "title": "The Last_name Schema",
+          "default": "",
+          "examples": ["Smith"],
+          "pattern": "^(.*)$"
+        },
+        "email": {
+          "$id": "#/properties/users/properties/email",
+          "type": "string",
+          "title": "The Email Schema",
+          "default": "",
+          "examples": ["example@gmail.com"],
+          "pattern": "^(.*)$",
+          "format": "email"
+        },
+        "photo_url": {
+          "$id": "#/properties/users/properties/photo_url",
+          "type": "string",
+          "title": "The Photo_url Schema",
+          "default": "",
+          "examples": [
+            "https://www.guidedogs.org/wp-content/uploads/2018/01/Mobile.jpg"
+          ],
+          "pattern": "^(.*)$",
+          "format": "hostname"
+        },
+        "is_admin": {
+          "$id": "#/properties/users/properties/is_admin",
+          "type": "boolean",
+          "title": "The Is_admin Schema",
+          "default": false,
+          "examples": [false]
+        }
+      }
+    }
+  }
+}

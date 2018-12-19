@@ -1,6 +1,7 @@
 // Placeholder for Company model
 const db = require('../db');
 const express = require('express');
+const sqlForPartialUpdate = require('../helpers/partialUpdate');
 
 class Company {
   static async displayByEmployeeCount({
@@ -52,5 +53,57 @@ class Company {
     } catch (error) {
       return error;
     }
+  }
+
+  static async getCompanyByHandle(handle) {
+    try {
+      const result = await db.query(
+        `SELECT * FROM companies WHERE handle = $1`,
+        [handle]
+      );
+      if (result.rows.length === 0) {
+        throw new Error('No such user exists');
+      }
+      return result.rows[0];
+    } catch (error) {
+      return error;
+    }
+  }
+
+  // static async getCompanyByName(name) {
+  //   try {
+  //     const result = await db.query(
+  //       `SELECT * FROM companies WHERE handle = $1`,
+  //       [handle]
+  //     );
+  //     if (result.rows.length === 0) {
+  //       throw new Error('No such user exists');
+  //     }
+  //     return result.rows[0];
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // }
+
+  static async updateCompany(handle, data) {
+    const { query, values } = sqlForPartialUpdate(
+      'companies',
+      data,
+      'handle',
+      handle
+    );
+
+    const result = await db.query(query, values);
+    return result;
+  }
+
+  static async deleteCompany(handle) {
+    const result = await db.query(
+      `DELETE FROM companies
+      WHERE handle = $1
+      RETURNING *`,
+      [handle]
+    );
+    return result;
   }
 }

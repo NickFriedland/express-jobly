@@ -9,6 +9,7 @@ describe('partialUpdate()', () => {
       sqlForPartialUpdate('users', { firstName: 'Elie' }, 'id', 100)
     ).toEqual({ query: queryString, values: ['Elie', 100] });
   });
+
   it('should generate a proper partial update query with multiple fields', function() {
     // Test key in items does not start with "_"
     //
@@ -22,6 +23,7 @@ describe('partialUpdate()', () => {
       )
     ).toEqual({ query: queryString, values: ['Elie', 'Schoppik', 100] });
   });
+
   it('should generate a proper partial update query, ignoring columns that start with "_" ', function() {
     const queryString = `UPDATE users SET firstName=$1, lastName=$2 WHERE id=$3 RETURNING *`;
     expect(

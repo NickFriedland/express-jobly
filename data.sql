@@ -3,7 +3,7 @@
 CREATE TABLE companies (
     handle text PRIMARY KEY,
     name text NOT NULL UNIQUE,
-    num_employees int,
+    num_employees integer NOT NULL,
     description text,
     logo_url text,
 );

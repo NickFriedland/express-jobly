@@ -1,0 +1,49 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": ["values"],
+  "properties": {
+    "values": {
+      "$id": "#/properties/values",
+      "type": "object",
+      "title": "The Values Schema",
+      "properties": {
+        "name": {
+          "$id": "#/properties/values/properties/name",
+          "type": "string",
+          "title": "The Name Schema",
+          "default": "",
+          "examples": ["text"],
+          "pattern": "^(.*)$"
+        },
+        "num_employees": {
+          "$id": "#/properties/values/properties/num_employees",
+          "type": "integer",
+          "title": "The Num_employees Schema",
+          "default": 0,
+          "examples": [0]
+        },
+        "description": {
+          "$id": "#/properties/values/properties/description",
+          "type": "string",
+          "title": "The Description Schema",
+          "default": "",
+          "examples": ["text"],
+          "pattern": "^(.*)$"
+        },
+        "logo_url": {
+          "$id": "#/properties/values/properties/logo_url",
+          "type": "string",
+          "title": "The Logo_url Schema",
+          "default": "",
+          "examples": ["http://www.google.com"],
+          "pattern": "^(.*)$",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}
