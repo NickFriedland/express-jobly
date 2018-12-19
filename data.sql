@@ -1,27 +1,28 @@
+
+
+CREATE TABLE companies (
+    handle text PRIMARY KEY,
+    name text NOT NULL UNIQUE,
+    num_employees int,
+    description text,
+    logo_url text,
+);
+
+CREATE TABLE jobs (
+    id SERIAL PRIMARY KEY,
+    title text NOT NULL,
+    salary integer NOT NULL,
+    equity float NOT NULL CHECK (equity >=0 AND equity <= 1),
+    company_handle text references companies(handle),
+    date_posted timestamp without time zone
+);
+
 CREATE TABLE users (
     username text PRIMARY KEY,
     password text,
     first_name text NOT NULL,
     last_name text NOT NULL,
-    phone text,
     email text,
-    join_at timestamp without time zone NOT NULL,
-    last_login_at timestamp without time zone
-);
-
-CREATE TABLE messages (
-    id SERIAL PRIMARY KEY,
-    from_username text NOT NULL REFERENCES users,
-    to_username text NOT NULL REFERENCES users,
-    body text NOT NULL,
-    sent_at timestamp without time zone NOT NULL,
-    read_at timestamp without time zone
-);
-
-CREATE TABLE companies (
-    handle test PRIMARY KEY,
-    name text NOT NULL UNIQUE,
-    num_employees int,
-    description text,
-    logo_url text,
+    photo_url text,
+    is_admin boolean NOT NULL DEFAULT FALSE
 );
