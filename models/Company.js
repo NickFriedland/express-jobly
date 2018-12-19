@@ -35,13 +35,13 @@ class Company {
     }
   }
 
-  static async createNewCompany({
+  static async createNewCompany(
     handle,
     name,
     num_employees,
     description,
     logo_url
-  }) {
+  ) {
     try {
       const company = await db.query(
         `INSERT INTO companies (handle, name, num_employees, description, logo_url)
@@ -98,12 +98,10 @@ class Company {
   }
 
   static async deleteCompany(handle) {
-    const result = await db.query(
+    await db.query(
       `DELETE FROM companies
-      WHERE handle = $1
-      RETURNING *`,
+      WHERE handle = $1`,
       [handle]
     );
-    return result;
   }
 }

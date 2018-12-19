@@ -16,12 +16,12 @@ router.get('/', async function(req, res, next) {
       next(error);
     }
 
-    const response = await Company.displayByEmployeeCount({
+    const companies = await Company.displayByEmployeeCount({
       search,
       min_employees,
       max_employees
     });
-    return res.json(response);
+    return res.json({ companies });
   } catch (error) {
     next(error);
   }

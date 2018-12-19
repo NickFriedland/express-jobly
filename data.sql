@@ -1,18 +1,21 @@
+DROP DATABASE IF EXISTS jobly;
+CREATE DATABASE jobly;
 
+\c jobly
 
 CREATE TABLE companies (
     handle text PRIMARY KEY,
     name text NOT NULL UNIQUE,
-    num_employees integer NOT NULL,
+    num_employees int NOT NULL,
     description text,
-    logo_url text,
+    logo_url text
 );
 
 CREATE TABLE jobs (
     id SERIAL PRIMARY KEY,
     title text NOT NULL,
-    salary integer NOT NULL,
-    equity float NOT NULL CHECK (equity >=0 AND equity <= 1),
+    salary int NOT NULL,
+    equity float NOT NULL CHECK (equity >= 0 AND equity <= 1),
     company_handle text references companies(handle),
     date_posted timestamp without time zone
 );

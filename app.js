@@ -2,6 +2,7 @@
 
 const express = require('express');
 const app = express();
+const APIError = require('./helpers/apiError');
 
 app.use(express.json());
 
@@ -28,12 +29,11 @@ app.use(function(req, res, next) {
 /** general error handler */
 
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-
-  return res.json({
-    error: err,
-    message: err.message
-  });
+  // all errors that get to here get coerced into API Errors
+  if (!(err instanceof APIError)) {
+    err = new APIError(err.message, err.status);
+  }
+  return res.status(err.status).json(err);
 });
 
 module.exports = app;
