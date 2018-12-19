@@ -17,3 +17,11 @@ CREATE TABLE messages (
     sent_at timestamp without time zone NOT NULL,
     read_at timestamp without time zone
 );
+
+CREATE TABLE companies (
+    handle test PRIMARY KEY,
+    name text NOT NULL UNIQUE,
+    num_employees int,
+    description text,
+    logo_url text,
+);
