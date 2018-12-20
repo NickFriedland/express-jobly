@@ -5,7 +5,7 @@ class Company {
   static async displayByEmployeeCount({
     search,
     min_employees = 0,
-    max_employees = Infinity // OR (999999999999999)
+    max_employees = 999999999
   }) {
     if (search) {
       const result = await db.query(
