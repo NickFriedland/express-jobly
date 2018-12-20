@@ -27,7 +27,7 @@ beforeEach(async () => {
   apple = result2.rows[0];
 });
 
-describe('COMPANY ROUTES', async function() {
+describe('GET TO /companies', async function() {
   it('should return all companies with no query string request to /companies', async function() {
     // Test key in items does not start with "_"
     //
@@ -68,6 +68,29 @@ describe('COMPANY ROUTES', async function() {
     expect(response.statusCode).toBe(200);
     expect(response.body).toEqual({
       companies: [{ handle: 'goog', name: 'Google' }]
+    });
+  });
+});
+
+describe('COMPANY ROUTES', async function() {
+  it('/post should add company with correct schema', async function() {
+    const response = await request(app)
+      .post('/companies')
+      .send({
+        handle: 'amzn',
+        name: 'Amazon',
+        num_employees: 1000,
+        description: 'Shopping'
+      });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({
+      company: {
+        handle: 'amzn',
+        name: 'Amazon',
+        num_employees: 1000,
+        description: 'Shopping',
+        logo_url: null
+      }
     });
   });
 });

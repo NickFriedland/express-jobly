@@ -47,6 +47,7 @@ class Company {
             RETURNING *`,
         [handle, name, num_employees, description, logo_url]
       );
+      console.log('COMPANY', company);
       return { company };
     } catch (error) {
       return error;
