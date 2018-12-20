@@ -5,7 +5,7 @@ class Company {
   static async displayByEmployeeCount({
     search,
     min_employees = 0,
-    max_employees = 99999
+    max_employees = Infinity // OR (999999999999999)
   }) {
     try {
       if (search) {
@@ -47,7 +47,7 @@ class Company {
             RETURNING *`,
         [handle, name, num_employees, description, logo_url]
       );
-      console.log('COMPANY', company);
+      // console.log('COMPANY', company);
       return { company };
     } catch (error) {
       return error;
@@ -85,23 +85,31 @@ class Company {
   // }
 
   static async updateCompany(handle, data) {
-    const { query, values } = sqlForPartialUpdate(
-      'companies',
-      data,
-      'handle',
-      handle
-    );
+    try {
+      const { query, values } = sqlForPartialUpdate(
+        'companies',
+        data,
+        'handle',
+        handle
+      );
 
-    const result = await db.query(query, values);
-    return result;
+      const result = await db.query(query, values);
+      return result;
+    } catch (error) {
+      return error;
+    }
   }
 
   static async deleteCompany(handle) {
-    await db.query(
-      `DELETE FROM companies
-      WHERE handle = $1`,
-      [handle]
-    );
+    try {
+      await db.query(
+        `DELETE FROM companies
+        WHERE handle = $1`,
+        [handle]
+      );
+    } catch (error) {
+      return error;
+    }
   }
 }
 

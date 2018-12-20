@@ -4,16 +4,16 @@
   "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
-  "required": ["job"],
+  "required": ["values"],
   "properties": {
-    "job": {
-      "$id": "#/properties/job",
+    "values": {
+      "$id": "#/properties/values",
       "type": "object",
-      "title": "The Job Schema",
+      "title": "The Values Schema",
       "required": ["title", "salary", "equity", "company_handle"],
       "properties": {
         "title": {
-          "$id": "#/properties/job/properties/title",
+          "$id": "#/properties/values/properties/title",
           "type": "string",
           "title": "The Title Schema",
           "default": "",
@@ -21,28 +21,27 @@
           "pattern": "^(.*)$"
         },
         "salary": {
-          "$id": "#/properties/job/properties/salary",
+          "$id": "#/properties/values/properties/salary",
           "type": "integer",
           "title": "The Salary Schema",
-          "default": "",
-          "examples": ["$110,000"]
+          "default": 0,
+          "examples": [110000]
         },
         "equity": {
-          "$id": "#/properties/job/properties/equity",
+          "$id": "#/properties/values/properties/equity",
           "type": "number",
           "title": "The Equity Schema",
-          "default": "",
-          "examples": ["0.01"]
+          "default": 0.0,
+          "examples": [0.01]
         },
         "company_handle": {
-          "$id": "#/properties/company_handle",
+          "$id": "#/properties/values/properties/company_handle",
           "type": "string",
           "title": "The Company_handle Schema",
           "default": "",
           "examples": ["APPL"],
           "pattern": "^(.*)$"
-          }
-        } 
+        }
       }
     }
   }
