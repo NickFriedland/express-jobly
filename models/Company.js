@@ -57,21 +57,6 @@ class Company {
     return result.rows[0];
   }
 
-  // static async getCompanyByName(name) {
-  //   try {
-  //     const result = await db.query(
-  //       `SELECT * FROM companies WHERE handle = $1`,
-  //       [handle]
-  //     );
-  //     if (result.rows.length === 0) {
-  //       throw new Error('No such user exists');
-  //     }
-  //     return result.rows[0];
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // }
-
   static async updateCompany(handle, data) {
     const { query, values } = sqlForPartialUpdate(
       'companies',
