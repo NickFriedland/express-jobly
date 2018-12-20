@@ -16,7 +16,7 @@ CREATE TABLE jobs
 (
     id SERIAL PRIMARY KEY,
     title text NOT NULL,
-    salary int NOT NULL,
+    salary float NOT NULL,
     equity float NOT NULL CHECK (equity >= 0 AND equity <= 1),
     company_handle text references companies(handle),
     date_posted timestamp

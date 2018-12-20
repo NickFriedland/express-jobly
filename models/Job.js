@@ -1,5 +1,6 @@
 const db = require('../db');
 const sqlForPartialUpdate = require('../helpers/partialUpdate');
+const APIError = require('../helpers/apiError');
 
 class Job {
   // model for enacting crud on jobs
@@ -44,6 +45,16 @@ class Job {
 
   // POST job
   static async postJob(title, salary, equity, company_handle, date_posted) {
+    const request = await db.query(
+      `SELECT * FROM jobs
+      WHERE company_handle = $1`,
+      [company_handle]
+    );
+
+    if (request.rows.length === 0) {
+      throw new APIError('Company does not exist', 404);
+    }
+
     const result = await db.query(
       `INSERT INTO jobs (title, salary, equity, company_handle, date_posted)
       VALUES ($1, $2, $3, $4, $5)
