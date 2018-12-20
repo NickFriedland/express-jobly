@@ -1,7 +1,6 @@
 process.env.NODE_ENV = 'test';
 // npm packages
 const request = require('supertest');
-const Company = require('../../models/Company');
 
 // app imports
 const app = require('../../app');
@@ -72,6 +71,7 @@ describe('COMPANY ROUTES', async function() {
   });
 });
 
+// DATA GETS PASSED, BUT RESULT.ROWS EMPTY
 describe('COMPANY ROUTES', async function() {
   it('/post should add company with correct schema', async function() {
     const response = await request(app)
@@ -91,6 +91,73 @@ describe('COMPANY ROUTES', async function() {
         description: 'Shopping',
         logo_url: null
       }
+    });
+  });
+});
+
+describe('COMPANY ROUTES', async function() {
+  it('GET /:handle should return that company data', async function() {
+    const response = await request(app).get('/companies/aapl');
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({
+      company: {
+        handle: 'aapl',
+        name: 'Apple',
+        num_employees: 500,
+        description: 'computers',
+        logo_url: null
+      }
+    });
+  });
+});
+
+// ERROR NOT THROWING.  EMPTY OBJ W/ TOP LEVEL KEY COMPANY INSTEAD
+describe('COMPANY ROUTES', async function() {
+  it('GET /:handle with wrong handle should return ERROR', async function() {
+    const response = await request(app).get('/companies/amzn');
+    expect(response.statusCode).toBe(404);
+    expect(response.body).toEqual({
+      error: { message: 'No such company exists', status: 404 }
+    });
+  });
+});
+
+describe('COMPANY ROUTES', async function() {
+  it('PATCH /:handle with correct handle and data should return updated company', async function() {
+    const response = await request(app)
+      .patch('/companies/aapl')
+      .send({ values: { num_employees: 5000 } });
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({
+      company: {
+        handle: 'aapl',
+        name: 'Apple',
+        num_employees: 5000,
+        description: 'computers',
+        logo_url: null
+      }
+    });
+  });
+});
+
+describe('COMPANY ROUTES', async function() {
+  it('PATCH /:handle should throw error w/ improper schema', async function() {
+    const response = await request(app)
+      .patch('/companies/aapl')
+      .send({ num_employees: 5000 });
+    expect(response.statusCode).toBe(500);
+    expect(response.body).toEqual({
+      error: { message: 'Invalid company info provided', status: 500 }
+    });
+  });
+});
+
+describe('COMPANY ROUTES', async function() {
+  it('DELETE /:handle with correct handle should return delete message', async function() {
+    const response = await request(app).delete('/companies/aapl');
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({
+      message: 'Company deleted'
     });
   });
 });

@@ -29,15 +29,17 @@ router.get('/', async function(req, res, next) {
 router.post('/', async function(req, res, next) {
   try {
     const result = validate(req.body, companySchema);
+    console.log('IS VALID?', result.valid);
+    console.log('REQ.BODY', req.body);
     if (!result.valid) {
       let message = result.errors.map(error => error.stack);
       let error = new Error(message);
       error.status = 400;
       return next(error);
     }
-    return res.json(await Company.createNewCompany(req.body));
+    return res.json({ company: await Company.createNewCompany(req.body) });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 // GET /companies/:handle
@@ -47,7 +49,7 @@ router.get('/:handle', async function(req, res, next) {
     const company = await Company.getCompanyByHandle(handle);
     return res.json({ company });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 // PATCH /companies/:handle
@@ -58,10 +60,10 @@ router.patch('/:handle', async function(req, res, next) {
     if (!result.valid) {
       throw new Error('Invalid company info provided');
     }
-    const response = Company.updateCompany(handle, req.body);
-    return res.json(response);
+    const company = await Company.updateCompany(req.params.handle, req.body);
+    return res.json({ company });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -70,9 +72,9 @@ router.patch('/:handle', async function(req, res, next) {
 router.delete('/:handle', async function(req, res, next) {
   try {
     Company.deleteCompany(req.params.handle);
-    return res.json({ message: ' Company deleted' });
+    return res.json({ message: 'Company deleted' });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
