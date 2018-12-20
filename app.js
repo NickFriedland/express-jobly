@@ -12,7 +12,7 @@ const morgan = require('morgan');
 app.use(morgan('tiny'));
 
 // add requires for routes files
-const companiesRoutes = require('./routes/companies');
+const companiesRoutes = require('./routes/companiesRoutes');
 
 app.use('/companies', companiesRoutes);
 

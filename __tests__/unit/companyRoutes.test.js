@@ -4,10 +4,10 @@ const request = require('supertest');
 const Company = require('../../models/Company');
 
 // app imports
-const app = require('../../../app');
-const db = require('../../../db');
+const app = require('../../app');
+const db = require('../../db');
 
-let google
+let google;
 
 beforeEach(async () => {
   let result = await db.query(
@@ -16,21 +16,23 @@ beforeEach(async () => {
             RETURNING *`,
     ['goog', 'Google', 100, 'search']
   );
-  let google = result.rows[0]
+  let google = result.rows[0];
 });
 
-describe('COMPANY ROUTES', () => {
-  it('should return companies with request to /companies', function() {
+describe('COMPANY ROUTES', async function() {
+  it('should return companies with request to /companies', async function() {
     // Test key in items does not start with "_"
     //
-    const response = await request(app.get('/companies'))
+    const response = await request(app).get('/companies');
+    expect(response.statusCode).toBe(200);
+
     expect(response).toEqual({ company: google });
   });
 });
 
 afterEach(async function() {
   // delete any data created by test
-  await db.query("DELETE FROM companies");
+  await db.query('DELETE FROM companies');
 });
 
 afterAll(async function() {
