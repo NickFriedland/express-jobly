@@ -1,5 +1,4 @@
 const express = require('express');
-const companiesRoutes = express();
 const Company = require('../models/Company');
 const router = new express.Router();
 const { validate } = require('jsonschema');
@@ -10,10 +9,11 @@ const patchCompany = require('../schemas/patchCompany.json');
 router.get('/', async function(req, res, next) {
   try {
     const { search, min_employees, max_employees } = req.query;
-    if (min_employees > max_employees) {
+    if (min_employees && max_employees && min_employees > max_employees) {
       let error;
       error.status = 400;
-      next(error);
+      return next(error);
+      console('PAST 400 ERROR');
     }
 
     const companies = await Company.displayByEmployeeCount({
@@ -21,9 +21,10 @@ router.get('/', async function(req, res, next) {
       min_employees,
       max_employees
     });
+    console.log('COMPANIES', companies);
     return res.json({ companies });
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 //  POST /companies
@@ -77,4 +78,4 @@ router.delete('/:handle', async function(req, res, next) {
   }
 });
 
-module.exports = companiesRoutes;
+module.exports = router;

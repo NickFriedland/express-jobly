@@ -16,7 +16,7 @@ beforeEach(async () => {
             RETURNING *`,
     ['goog', 'Google', 100, 'search']
   );
-  let google = result.rows[0];
+  google = result.rows[0];
 });
 
 describe('COMPANY ROUTES', async function() {
@@ -26,7 +26,9 @@ describe('COMPANY ROUTES', async function() {
     const response = await request(app).get('/companies');
     expect(response.statusCode).toBe(200);
 
-    expect(response).toEqual({ company: google });
+    expect({ companies: [response.body.companies[0]] }).toEqual({
+      companies: [{ handle: 'goog', name: 'Google' }]
+    });
   });
 });
 

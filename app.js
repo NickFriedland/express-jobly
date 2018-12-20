@@ -19,7 +19,7 @@ app.use('/companies', companiesRoutes);
 /** 404 handler */
 
 app.use(function(req, res, next) {
-  const err = new Error('Not Found');
+  const err = new APIError(`${req.path} is not a valid endpoint`, 404);
   err.status = 404;
 
   // pass the error to the next piece of middleware
