@@ -1,0 +1,11 @@
+{
+  "values": {
+    "username": "username",
+    "password": "password",
+    "first_name": "John",
+    "last_name": "Smith",
+    "email": "https://www.rithmschool.com/",
+    "photo_url": "http://cdn.akc.org/content/hero/puppy-boundaries_header.jpg",
+    "is_admin": false
+  }
+}

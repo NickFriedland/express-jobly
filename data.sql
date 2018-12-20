@@ -3,7 +3,8 @@ CREATE DATABASE jobly;
 
 \c jobly
 
-CREATE TABLE companies (
+CREATE TABLE companies
+(
     handle text PRIMARY KEY,
     name text NOT NULL UNIQUE,
     num_employees int NOT NULL,
@@ -11,14 +12,15 @@ CREATE TABLE companies (
     logo_url text
 );
 
-CREATE TABLE jobs (
+CREATE TABLE jobs
+(
     id SERIAL PRIMARY KEY,
     title text NOT NULL,
     salary int NOT NULL,
     equity float NOT NULL CHECK (equity >= 0 AND equity <= 1),
-    company_handle text references companies(handle),
-    date_posted timestamp without time zone
-    ON DELETE CASCADE
+    company_handle text references companies(handle) ON DELETE CASCADE,
+    date_posted timestamp without time zone DEFAULT current_timestamp
+    
 );
 
 CREATE TABLE users (

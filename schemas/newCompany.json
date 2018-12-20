@@ -11,7 +11,7 @@
       "type": "string",
       "title": "The Handle Schema",
       "default": "",
-      "examples": ["username"],
+      "examples": ["APPL"],
       "pattern": "^(.*)$"
     },
     "name": {
