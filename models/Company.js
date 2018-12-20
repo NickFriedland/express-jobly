@@ -36,7 +36,6 @@ class Company {
     description,
     logo_url
   }) {
-    console.log('PARAMS', handle, name, num_employees, description, logo_url);
     const result = await db.query(
       `INSERT INTO companies (handle, name, num_employees, description, logo_url)
             VALUES ($1, $2, $3, $4, $5)
@@ -52,7 +51,7 @@ class Company {
     ]);
     if (result.rows.length === 0) {
       let error = new Error('No such company exists');
-      error.status = 404;
+      // error.status = 404;
       throw error;
     }
     return result.rows[0];
@@ -86,11 +85,16 @@ class Company {
   }
 
   static async deleteCompany(handle) {
-    await db.query(
+    const result = await db.query(
       `DELETE FROM companies
-      WHERE handle = $1`,
+      WHERE handle = $1
+      RETURNING *`,
       [handle]
     );
+    if (result.rows.length === 0) {
+      throw new Error('Cannot delete nonexistent company');
+    }
+    return result.rows[0];
   }
 }
 
