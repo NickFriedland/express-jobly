@@ -8,6 +8,7 @@ class User {
     const result = await db.query(
       `SELECT username, first_name, last_name, email FROM users`
     );
+    return result.rows;
   }
 }
 

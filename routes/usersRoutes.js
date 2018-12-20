@@ -6,7 +6,7 @@ const { validate } = require('jsonschema');
 const userSchema = require('../schemas/newUser.json');
 
 // GET /users
-
+router.get('/');
 // POST /users
 
 // GET /users/:username

@@ -13,8 +13,12 @@ app.use(morgan('tiny'));
 
 // add requires for routes files
 const companiesRoutes = require('./routes/companiesRoutes');
+const usersRoutes = require('./routes/usersRoutes');
+const jobsRoutes = require('./routes/jobsRoutes');
 
 app.use('/companies', companiesRoutes);
+app.use('/users', usersRoutes);
+app.use('/jobs', jobsRoutes);
 
 /** 404 handler */
 
