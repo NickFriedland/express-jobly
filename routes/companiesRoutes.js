@@ -21,6 +21,7 @@ router.get('/', async function(req, res, next) {
       min_employees,
       max_employees
     });
+    console.log('PARAMS', search, min_employees, max_employees);
     console.log('COMPANIES', companies);
     return res.json({ companies });
   } catch (error) {

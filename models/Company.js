@@ -1,5 +1,4 @@
 const db = require('../db');
-const express = require('express');
 const sqlForPartialUpdate = require('../helpers/partialUpdate');
 
 class Company {
@@ -14,7 +13,7 @@ class Company {
           `SELECT handle, name 
             FROM companies 
             WHERE num_employees BETWEEN $2 AND $3
-            AND name LIKE $1
+            AND lower(name) LIKE lower($1)
             ORDER BY name`,
           [`%${search}%`, min_employees, max_employees]
         );
