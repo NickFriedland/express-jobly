@@ -46,15 +46,24 @@ class Company {
   }
 
   static async getCompanyByHandle(handle) {
-    const result = await db.query(`SELECT * FROM companies WHERE handle = $1`, [
-      handle
-    ]);
-    if (result.rows.length === 0) {
+    const compRes = await db.query(
+      `SELECT * FROM companies WHERE handle = $1`,
+      [handle]
+    );
+    if (compRes.rows.length === 0) {
       let error = new Error('No such company exists');
       // error.status = 404;
       throw error;
     }
-    return result.rows[0];
+    const jobsRes = await db.query(
+      `SELECT * FROM jobs
+      WHERE company_handle = $1`,
+      [handle]
+    );
+
+    const company = compRes.rows[0];
+    company.jobs = jobsRes.rows;
+    return company;
   }
 
   static async updateCompany(handle, data) {

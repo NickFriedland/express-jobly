@@ -4,46 +4,37 @@
   "$id": "http://example.com/root.json",
   "type": "object",
   "title": "The Root Schema",
-  "required": ["job"],
+  "required": ["title", "salary", "equity", "company_handle"],
   "properties": {
-    "job": {
-      "$id": "#/properties/job",
-      "type": "object",
-      "title": "The Job Schema",
-      "required": ["title", "salary", "equity", "company_handle"],
-      "properties": {
-        "title": {
-          "$id": "#/properties/job/properties/title",
-          "type": "string",
-          "title": "The Title Schema",
-          "default": "",
-          "examples": ["title"],
-          "pattern": "^(.*)$"
-        },
-        "salary": {
-          "$id": "#/properties/job/properties/salary",
-          "type": "integer",
-          "title": "The Salary Schema",
-          "default": "",
-          "examples": ["$110,000"]
-        },
-        "equity": {
-          "$id": "#/properties/job/properties/equity",
-          "type": "number",
-          "title": "The Equity Schema",
-          "default": "",
-          "examples": ["0.01"]
-        },
-        "company_handle": {
-          "$id": "#/properties/company_handle",
-          "type": "string",
-          "title": "The Company_handle Schema",
-          "default": "",
-          "examples": ["APPL"],
-          "pattern": "^(.*)$"
-          }
-        } 
-      }
+    "title": {
+      "$id": "#/properties/title",
+      "type": "string",
+      "title": "The Title Schema",
+      "default": "",
+      "examples": ["Sultan"],
+      "pattern": "^(.*)$"
+    },
+    "salary": {
+      "$id": "#/properties/salary",
+      "type": "integer",
+      "title": "The Salary Schema",
+      "default": 0,
+      "examples": [60000]
+    },
+    "equity": {
+      "$id": "#/properties/equity",
+      "type": "number",
+      "title": "The Equity Schema",
+      "default": 0.0,
+      "examples": [0.05]
+    },
+    "company_handle": {
+      "$id": "#/properties/company_handle",
+      "type": "string",
+      "title": "The Company_handle Schema",
+      "default": "",
+      "examples": ["goog"],
+      "pattern": "^(.*)$"
     }
   }
 }

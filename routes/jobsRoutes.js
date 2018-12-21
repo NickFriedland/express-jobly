@@ -11,11 +11,26 @@ const router = new express.Router();
 router.get('/', async function(req, res, next) {
   try {
     // create params from query string for search, min_salary, max_salary
-    const { search, min_salary, max_salary } = req.query;
+    let { search, min_salary, max_salary } = req.query;
+    if (min_salary && isNaN(min_salary)) {
+      throw new APIError('Sorry, minimum salary must be a valid number', 404);
+    } else if (!min_salary) {
+      min_salary = 0;
+    } else {
+      min_salary = +min_salary;
+    }
+    if (max_salary && isNaN(max_salary)) {
+      throw new APIError('Sorry, minimum salary must be a valid number', 404);
+    } else if (!max_salary) {
+      max_salary = 9999999;
+    } else {
+      max_salary = +max_salary;
+    }
     // if min_salary > max_salary when both are present, throw new APIError
+    // console.log('MIN', min_salary, 'MAX', max_salary);
     if (min_salary && max_salary && min_salary > max_salary) {
       throw new APIError(
-        "Minimum salary can\n't be greater than max salary",
+        "Minimum salary can't be greater than max salary",
         404
       );
     }
@@ -37,6 +52,7 @@ router.post('/', async function(req, res, next) {
 
     if (!result.valid) {
       const message = result.errors.map(e => e.stack);
+      console.log(message);
       throw new APIError(message, 404);
     }
 
@@ -85,4 +101,4 @@ router.delete('/:id', async function(req, res, next) {
   }
 });
 
-router.module.exports = router;
+module.exports = router;

@@ -1,7 +1,6 @@
 {
   "name": "express-jobly",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "jest",
@@ -24,5 +23,15 @@
   "devDependencies": {
     "jest": "^23.6.0",
     "supertest": "^3.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ferrisdraouil/express-jobly.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ferrisdraouil/express-jobly/issues"
+  },
+  "homepage": "https://github.com/ferrisdraouil/express-jobly#readme",
+  "description": ""
 }

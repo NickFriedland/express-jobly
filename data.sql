@@ -1,7 +1,6 @@
-DROP DATABASE IF EXISTS jobly;
-CREATE DATABASE jobly;
+-- DROP DATABASE IF EXISTS jobly;
+-- CREATE DATABASE jobly;
 
-\c jobly
 
 CREATE TABLE companies
 (
@@ -19,16 +18,18 @@ CREATE TABLE jobs
     salary int NOT NULL,
     equity float NOT NULL CHECK (equity >= 0 AND equity <= 1),
     company_handle text references companies(handle) ON DELETE CASCADE,
-    date_posted timestamp without time zone DEFAULT current_timestamp
+    date_posted timestamp
+    without time zone DEFAULT current_timestamp
     
 );
 
-CREATE TABLE users (
-    username text PRIMARY KEY,
-    password text NOT NULL,
-    first_name text NOT NULL,
-    last_name text NOT NULL,
-    email text NOT NULL UNIQUE,
-    photo_url text,
-    is_admin boolean NOT NULL DEFAULT FALSE
-);
+    CREATE TABLE users
+    (
+        username text PRIMARY KEY,
+        password text NOT NULL,
+        first_name text NOT NULL,
+        last_name text NOT NULL,
+        email text NOT NULL UNIQUE,
+        photo_url text,
+        is_admin boolean NOT NULL DEFAULT FALSE
+    );

@@ -1,8 +1,7 @@
 /** Express app for jobly. */
-
 const express = require('express');
-const app = express();
 const APIError = require('./helpers/apiError');
+const app = express();
 
 app.use(express.json());
 
@@ -18,7 +17,7 @@ const jobsRoutes = require('./routes/jobsRoutes');
 
 app.use('/companies', companiesRoutes);
 app.use('/users', usersRoutes);
-// app.use('/jobs', jobsRoutes);
+app.use('/jobs', jobsRoutes);
 
 /** 404 handler */
 

@@ -5,7 +5,7 @@ const APIError = require('../helpers/apiError');
 class Job {
   // model for enacting crud on jobs
 
-  static async getJobs({ search, min_salary = 0, max_salary = 9999999999999 }) {
+  static async getJobs({ search, min_salary, max_salary }) {
     // Titles and company handles for all jobs, ordered by most recent
     /* Query string params: 
           search: filtered list of titles and company handles
@@ -15,21 +15,17 @@ class Job {
     */
     if (search) {
       const result = await db.query(
-        `SELECT title, company_handle
+        `SELECT *
         FROM jobs
         WHERE salary BETWEEN $2 AND $3
         AND lower(title) LIKE lower($1)
         ORDER BY date_posted DESC`,
         [`%${search}%`, min_salary, max_salary]
       );
-
-      if (result.rows.length === 0) {
-        throw new Error('No such company exists');
-      }
       return result.rows;
     } else {
       const result = await db.query(
-        `SELECT title, company_handle
+        `SELECT *
         FROM jobs
         WHERE salary BETWEEN $1 AND $2
         ORDER BY date_posted DESC`,
@@ -37,22 +33,22 @@ class Job {
       );
 
       if (result.rows.length === 0) {
-        throw new Error('No such company exists');
+        throw new APIError('Bad economy, no jobs', 400);
       }
       return result.rows;
     }
   }
 
   // POST job
-  static async postJob(title, salary, equity, company_handle, date_posted) {
+  static async postJob({ title, salary, equity, company_handle, date_posted }) {
     const request = await db.query(
       `SELECT * FROM jobs
       WHERE company_handle = $1`,
       [company_handle]
     );
-
+    console.log('REQUEST', company_handle);
     if (request.rows.length === 0) {
-      throw new APIError('Company does not exist', 404);
+      throw new APIError("Company doesn't exist", 404);
     }
 
     const result = await db.query(
@@ -67,9 +63,10 @@ class Job {
 
   // GET job by id
   static async getJobById(id) {
-    if (typeof id !== 'number') {
-      throw new APIError('Invalid id for job', 404);
+    if (isNaN(+id)) {
+      throw new APIError('Could not find company with that id', 404);
     }
+    id = +id;
 
     const result = await db.query(
       `SELECT * FROM jobs
@@ -78,7 +75,7 @@ class Job {
     );
 
     if (result.rows.length === 0) {
-      throw new APIError('No such company exists', 404);
+      throw new APIError('Could not find company with that id', 404);
     }
 
     return result.rows[0];
@@ -86,9 +83,10 @@ class Job {
 
   // PATCH job by id
   static async updateJobById(id, data) {
-    if (typeof id !== 'number') {
-      throw new APIError('Invalid id for job', 404);
+    if (isNaN(+id)) {
+      throw new APIError('Could not find company with that id', 404);
     }
+    id = +id;
 
     const { query, values } = sqlForPartialUpdate(
       'jobs',
@@ -100,7 +98,7 @@ class Job {
     const result = await db.query(query, values);
 
     if (result.rows.length === 0) {
-      throw new APIError('No such company exists', 404);
+      throw new APIError('Could not find company with that id', 404);
     }
 
     return result.rows[0];
@@ -108,9 +106,10 @@ class Job {
 
   // DELETE job by id
   static async deleteJobById(id) {
-    if (typeof id !== 'number') {
-      throw new APIError('Invalid id for job', 404);
+    if (isNaN(+id)) {
+      throw new APIError('Could not find company with that id', 404);
     }
+    id = +id;
 
     const result = await db.query(
       `DELETE FROM jobs
@@ -120,7 +119,7 @@ class Job {
     );
 
     if (result.rows.length === 0) {
-      throw new APIError('No such company exists', 404);
+      throw new APIError('Could not find company with that id', 404);
     }
   }
 }

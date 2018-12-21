@@ -1,14 +1,17 @@
 const express = require('express');
 const Company = require('../models/Company');
-const router = new express.Router();
 const { validate } = require('jsonschema');
 const companySchema = require('../schemas/newCompany.json');
 const patchCompany = require('../schemas/patchCompany.json');
 
+const router = new express.Router();
+
 // GET /companies
 router.get('/', async function(req, res, next) {
   try {
-    const { search, min_employees, max_employees } = req.query;
+    let { search, min_employees, max_employees } = req.query;
+    min_employees = +min_employees;
+    max_employees = +max_employees;
     if (min_employees && max_employees && min_employees > max_employees) {
       let error = new Error('Min employees must be less than Max employees');
       error.status = 400;
